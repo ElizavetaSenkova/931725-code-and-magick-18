@@ -13,7 +13,7 @@ window.renderStatistics = function (ctx, names, times) {
   var TEXT_MARGIN = 30;
 
   var CHART_WIDTH = 40;
-  var CHART_HEIGHT = 150;
+  var CHART_HEIGHT = 150; // макс высота столбца
   var CHART_X = 150;
   var CHART_Y = 110;
   var CHART_MARGIN = 50;
@@ -33,43 +33,37 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.font = '16px PT Mono';
   ctx.fillText('Список результатов:', TEXT_X, TEXT_Y + TEXT_MARGIN);
 
-  // names = ['Вы', 'Кекс', 'Катя', 'Игорь'];
-
-  for (var i = 0; i < names.length; i++) {
-    ctx.fillText(names[i], CHART_X + (CHART_MARGIN * i), CHART_TEXT_Y);
-    ctx.fillRect(CHART_X + (CHART_MARGIN * i), CHART_Y, CHART_WIDTH, CHART_HEIGHT);
+  function randomInteger(min, max) {
+    // случайное число от min до (max+1)
+    var rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
   }
 
-  // var playerIndex = 0;
-  // var playerName = 'Вы';
+  var getMaxElement = function (arr) {
+    var maxElement = arr[0];
 
-  // ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-  // ctx.fillRect(CHART_X + (CHART_MARGIN * playerIndex), CHART_Y, CHART_WIDTH, CHART_HEIGHT);
-  // ctx.fillStyle = 'black';
-  // ctx.fillText('Вы', CHART_X + (CHART_MARGIN * playerIndex), CHART_TEXT_Y);
+    for (var i = 1; i < arr.length; i++) {
+      if (arr[i] > maxElement) {
+        maxElement = arr[i];
+      }
+    }
 
-  // var playerIndex = 1;
-  // var playerName = 'Кекс';
+    return maxElement;
+  };
 
-  // ctx.fillStyle = 'hsl(240, ' + Math.random() + ', 50%)';
-  // ctx.fillRect(CHART_X + (CHART_MARGIN * playerIndex), CHART_Y, CHART_WIDTH, CHART_HEIGHT);
-  // ctx.fillStyle = 'black';
-  // ctx.fillText('Кекс', CHART_X + (CHART_MARGIN * playerIndex), CHART_TEXT_Y);
+  var maxTime = getMaxElement(times);
 
-  // var playerIndex = 2;
-  // var playerName = 'Катя';
+  for (var i = 0; i < names.length; i++) {
+    ctx.fillText(Math.round(times[i]), CHART_X + (CHART_MARGIN * i), CHART_Y - 10);
+    ctx.fillText(names[i], CHART_X + (CHART_MARGIN * i), CHART_TEXT_Y);
+    ctx.fillRect(CHART_X + (CHART_MARGIN * i), CHART_Y + (CHART_HEIGHT - ((CHART_HEIGHT * times[i]) / maxTime)), CHART_WIDTH, (CHART_HEIGHT * times[i]) / maxTime);
 
-  // ctx.fillStyle = 'hsl(240, ' + Math.random() + ', 50%)';
-  // ctx.fillRect(CHART_X + (CHART_MARGIN * playerIndex), CHART_Y, CHART_WIDTH, CHART_HEIGHT);
-  // ctx.fillStyle = 'black';
-  // ctx.fillText('Катя', CHART_X + (CHART_MARGIN * playerIndex), CHART_TEXT_Y);
+    if (i === 0) {
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    } else {
+      ctx.fillStyle = 'hsl(240, ' + randomInteger(0, 100) + '%' + ', 50%)';
+    }
 
-  // var playerIndex = 3;
-  // var playerName = 'Игорь';
-
-  // ctx.fillStyle = 'hsl(240, ' + Math.random() + ', 50%)';
-  // ctx.fillRect(CHART_X + (CHART_MARGIN * playerIndex), CHART_Y, CHART_WIDTH, CHART_HEIGHT);
-  // ctx.fillStyle = 'black';
-  // ctx.fillText('Игорь', CHART_X + (CHART_MARGIN * playerIndex), CHART_TEXT_Y);
+  }
 
 };
