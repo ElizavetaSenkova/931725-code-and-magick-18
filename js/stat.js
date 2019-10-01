@@ -19,19 +19,22 @@ window.renderStatistics = function (ctx, names, times) {
   var CHART_MARGIN = 50;
   var CHART_TEXT_Y = 280;
 
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect(CLOUD_X + CLOUD_ADD, CLOUD_Y + CLOUD_ADD, CLOUD_WIDTH, CLOUD_HEIGHT);
+  function renderBackground(context, x, y, width, height, color) {
+    context.fillStyle = color;
+    context.fillRect(x, y, width, height);
+  }
 
-  ctx.fillStyle = 'white';
-  ctx.fillRect(CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT);
+  renderBackground(ctx, CLOUD_X + CLOUD_ADD, CLOUD_Y + CLOUD_ADD, CLOUD_WIDTH, CLOUD_HEIGHT, 'rgba(0, 0, 0, 0.7)');
+  renderBackground(ctx, CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT, 'white');
 
-  ctx.fillStyle = 'black';
-  ctx.font = '16px PT Mono';
-  ctx.fillText('Ура вы победили!', TEXT_X, TEXT_Y);
+  function renderTitles(context, text, x, y, color, font) {
+    context.fillStyle = color;
+    context.font = font;
+    context.fillText(text, x, y);
+  }
 
-  ctx.fillStyle = 'black';
-  ctx.font = '16px PT Mono';
-  ctx.fillText('Список результатов:', TEXT_X, TEXT_Y + TEXT_MARGIN);
+  renderTitles(ctx, 'Ура вы победили!', TEXT_X, TEXT_Y, 'black', '16px PT Mono');
+  renderTitles(ctx, 'Список результатов:', TEXT_X, TEXT_Y + TEXT_MARGIN, 'black', '16px PT Mono');
 
   function randomInteger(min, max) {
     // случайное число от min до (max+1)
@@ -53,10 +56,18 @@ window.renderStatistics = function (ctx, names, times) {
 
   var maxTime = getMaxElement(times);
 
+  function renderRect(context, x, y, width, height) {
+    context.fillRect(x, y, width, height);
+  }
+
+  function renderRectParameters(context, parameters, x, y) {
+    context.fillRect(parameters, x, y);
+  }
+
   for (var i = 0; i < names.length; i++) {
-    ctx.fillText(Math.round(times[i]), CHART_X + (CHART_MARGIN * i), CHART_Y - 10);
-    ctx.fillText(names[i], CHART_X + (CHART_MARGIN * i), CHART_TEXT_Y);
-    ctx.fillRect(CHART_X + (CHART_MARGIN * i), CHART_Y + (CHART_HEIGHT - ((CHART_HEIGHT * times[i]) / maxTime)), CHART_WIDTH, (CHART_HEIGHT * times[i]) / maxTime);
+    renderRectParameters(ctx, Math.round(times[i]), CHART_X + (CHART_MARGIN * i), CHART_Y - 10);
+    renderRectParameters(ctx, names[i], CHART_X + (CHART_MARGIN * i), CHART_TEXT_Y);
+    renderRect(ctx, CHART_X + (CHART_MARGIN * i), CHART_Y + (CHART_HEIGHT - ((CHART_HEIGHT * times[i]) / maxTime)), CHART_WIDTH, (CHART_HEIGHT * times[i]) / maxTime);
 
     if (i === 0) {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
