@@ -17,8 +17,8 @@ var CHART_Y = 110;
 var CHART_MARGIN = 50;
 var CHART_TEXT_Y = 280;
 
-var names = ['Вы', 'Кекс', 'Катя', 'Игорь'];
-var times = ['2725', '4025', '1244', '1339'];
+// var names = ['Вы', 'Кекс', 'Катя', 'Игорь'];
+// var times = ['2725', '4025', '1244', '1339'];
 
 window.renderStatistics = function (ctx, names, times) {
 

@@ -4,7 +4,6 @@
 
   var WIZARD_BALLS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
-  // var setup = document.querySelector('.setup'); 
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = window.setup.querySelector('.setup-close');
   var inputName = window.setup.querySelector('.setup-user-name');
