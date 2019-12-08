@@ -1,23 +1,26 @@
 'use strict';
 
+var CLOUD_WIDTH = 270;
+var CLOUD_HEIGHT = 420;
+var CLOUD_X = 100;
+var CLOUD_Y = 10;
+var CLOUD_ADD = 10;
+
+var TEXT_X = 150;
+var TEXT_Y = 40;
+var TEXT_MARGIN = 30;
+
+var CHART_WIDTH = 40;
+var CHART_HEIGHT = 150; // макс высота столбца
+var CHART_X = 150;
+var CHART_Y = 110;
+var CHART_MARGIN = 50;
+var CHART_TEXT_Y = 280;
+
+var names = ['Вы', 'Кекс', 'Катя', 'Игорь'];
+var times = ['2725', '4025', '1244', '1339'];
+
 window.renderStatistics = function (ctx, names, times) {
-
-  var CLOUD_WIDTH = 270;
-  var CLOUD_HEIGHT = 420;
-  var CLOUD_X = 100;
-  var CLOUD_Y = 10;
-  var CLOUD_ADD = 10;
-
-  var TEXT_X = 150;
-  var TEXT_Y = 40;
-  var TEXT_MARGIN = 30;
-
-  var CHART_WIDTH = 40;
-  var CHART_HEIGHT = 150; // макс высота столбца
-  var CHART_X = 150;
-  var CHART_Y = 110;
-  var CHART_MARGIN = 50;
-  var CHART_TEXT_Y = 280;
 
   function renderBackground(context, x, y, width, height, color) {
     context.fillStyle = color;
@@ -60,8 +63,9 @@ window.renderStatistics = function (ctx, names, times) {
     context.fillRect(x, y, width, height);
   }
 
-  function renderRectParameters(context, parameters, x, y) {
-    context.fillRect(parameters, x, y);
+  function renderRectParameters(context, parameters, x, y, color) {
+    context.fillStyle = color;
+    context.fillText(parameters, x, y);
   }
 
   for (var i = 0; i < names.length; i++) {
